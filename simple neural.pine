@@ -7,14 +7,14 @@
 // @version=5
 indicator("Simple Neural Network Transformed RSI [QuantraAI]", "NNT RSI - [QuantraAI]", false, max_labels_count = 500)
 
-/// ────────────────
+/// ────────────────────
 /// ─── User defined inputs
 
 /// ─── Imports ───
 import QuantraAI/QuantraMAs/2 as DynamicMA
 import QuantraSystems/DynamicFunctions/1 as DynamicFunc
 
-/// ────────────
+/// ────────────────────
 /// ─── Neural ───
 /// ─── Colors ───
 
@@ -271,12 +271,12 @@ AllenMint60									= #33ffac								// AllenMint60
 
 /////////////////
 
-/// ─── Manual colors
+/// ── Manual colors
 colNeurUp		= AllenMint60
 colNeurDn		= AmeTrGrayNickel
 colNeurBack		= ARoPrimary
 
-/// ─── Vars ───
+/// ── Vars ──
 var string NS = "ɴɴᴛ ʀsɪ - Settings", var string NU = "ɴɴᴛ ʀsɪ - UI", var string COMP = "Compressed Signal Mode"
 
 src				= input.source(close,				"Source",										group = NS)
@@ -301,8 +301,8 @@ Reversal_B		= input.bool  (true,				"Reversion Line",								group = COMP)
 Trend_B			= input.bool  (true,				"Trend Line",									group = COMP)
 Candles_B		= input.bool  (true,				"HA Candle Line",								group = COMP)
 
-/// ────────────────
-/// ─── Option Color 
+/// ────────────────────
+/// ── Option Color 
 
 [UpC, DnC]			= switch	 ColMode
 	"Classic"		=> [#00E676, #880E4F]
@@ -317,12 +317,12 @@ Candles_B		= input.bool  (true,				"HA Candle Line",								group = COMP)
 	false			=> [UpC,	DnC   ]
 	true			=> [manUpC,	manDnC]
 
-////////////////////
-/// ────────────────
-/// ─── Heikin Ashi
+////////////////////////
+/// ────────────────────
+/// ── Heikin Ashi
 
-/// ────────────────
-/// ─── Bar Structure
+/// ────────────────────
+/// ── Bar Structure
 
 type HA
 	float o = na
@@ -339,12 +339,12 @@ ha(o, h, l, c) =>
 	x.l := math.min(l, math.min(x.o, x.c))
 	x
 
-////////////////////
-/// ────────────────
-/// ─── Core Calculations
+////////////////////////
+/// ────────────────────
+/// ── Core Calculations
 
-/// ────────────────
-/// ─── Simple NN Logic
+/// ────────────────────
+/// ── Simple NN Logic
 
 /// ── Base RSI Calculation
 rsi1 = DynamicFunc.Rsi(src, rsiLength)
@@ -361,9 +361,9 @@ for i = 0 to nnLength - 1
 Mean  = DynamicMA.SMA(nnOutput, sdLook)
 cross = useMean? 50 : Mean
 
-////////////////////
-/// ────────────────
-/// ─── HA Representation
+////////////////////////
+/// ────────────────────
+/// ── HA Representation
 
 ha = ha(
 	 na(nnOutput[1]) ? nnOutput : nnOutput[1], 
@@ -371,19 +371,19 @@ ha = ha(
 	 math.min(nnOutput, nnOutput[1]), 
 	 nnOutput)
 
-////////////////////
-/// ────────────────
-/// ─── Dinamic OB/OS Bands
+////////////////////////
+/// ────────────────────
+/// ── Dinamic OB/OS Bands
 
 [_, u1, l1] = DynamicFunc.stdv_bands(nnOutput, sdLook, sdMult/2)
 [_, u2, l2] = DynamicFunc.stdv_bands(nnOutput, sdLook, sdMult)
 
-////////////////////
-/// ────────────────
-/// ─── Visualitation
+////////////////////////
+/// ────────────────────
+/// ── Visualitation
 
-/// ───────────────
-/// ─── Coloring Type
+/// ────────────────────
+/// ── Coloring Type
 
 color col = switch ColType
 	"None"              => na
@@ -397,9 +397,9 @@ color HACol = switch
 	ha.c > ha.o => UpCol
 	ha.c < ha.o => DnCol
 
-////////////////////
-/// ────────────────
-/// ─── Final Plot & Fill
+////////////////////////
+/// ────────────────────
+/// ── Final Plot & Fill
 
 // Define shared display settings
 var all         = compress ? display.none : display.all
@@ -433,9 +433,9 @@ mid = plot      (cross,   "𝓒𝓻𝓸𝓼𝓼𝓲𝓷𝓰 𝓛𝓲𝓷𝓮",  
 	  // Bar Coloring
 	  barcolor  (BCol? col : na)
 
-////////////////////
-/// ────────────────
-/// ─── Compressed Signal Mode
+////////////////////////
+/// ────────────────────
+/// ── Compressed Signal Mode
 
 trVal       = DispV != "Heikin Ashi"? nnOutput : ha.c
 
@@ -488,9 +488,9 @@ if array.size(a_labels) > 0
 	for i = 0 to array.size(a_labels) - 1
 		label.delete(array.get(a_labels, i))
 
-////////////////////
-/// ────────────────
-/// ─── User Alert Conditions
+////////////////////////
+/// ────────────────────
+/// ── User Alert Conditions
 
 symbol = "NNT RSI [QuantraAI] >>> {{exchange}}:{{ticker}}"
 
@@ -498,4 +498,3 @@ symbol = "NNT RSI [QuantraAI] >>> {{exchange}}:{{ticker}}"
 alertcondition(Trend_Up   or Trend_Dn,   "Major Trend Shift",  symbol + " Major Trend Shift!"   )
 alertcondition(Candle_Up  or Candle_Dn,  "HA Candle Change",   symbol + " HA Candle Change!"    )
 alertcondition(Extrema_Up or Extrema_Dn, "OB/OS",              symbol + " Extreme OB/OS Zone!"  )
-
