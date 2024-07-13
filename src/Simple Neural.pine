@@ -51,7 +51,7 @@ AmeTrGrayNickel							= #F1F1F1								// AmeritradeGrayNickel
 	// AmeTrGrayAsh								= #D8D8D8								// AmeritradeGrayAsh
 	// AmeTrGrayStone							= #999999								// AmeritradeGrayStone
 	// AmeTrGrayIron							= #666666								// AmeritradeGrayIron
-AmeTrGrayCharcoal						= #333333								// AmeritradeGrayCharcoal
+	// AmeTrGrayCharcoal						= #333333								// AmeritradeGrayCharcoal
 	// AmeTrBlack								= #000000								// AmeritradeBlack
 	// AmeTrGreenCabbage						= #EBF6E9								// AmeritradeGreenCabbage
 	// AmeTrGreenVerdeLight70					= #B4D6B2								// AmeritradeGreenVerdeLight70
@@ -125,7 +125,7 @@ Axi413dab8			   					= #00275d					            // Axi413dab8
 	// GraySgrayMedium							= #eee									// GrayScalegrayMedium
 	// GraySgray70								= #696666								// GrayScalegray70
 	// GraySgrayDark							= #c1c1c1								// GrayScalegrayDark
-GraySwebSeasalt		    				= #fafafc								// GrayScalewebSeasalt
+	// GraySwebSeasalt		    				= #fafafc								// GrayScalewebSeasalt
 	// GraySwebDivider							= #e9e7f1								// GrayScalewebDivider
 	// GraySwebBackground						= #f3f2fa								// GrayScalewebBackground
 	// GraySwebSecondaryText					= #77708a								// GrayScalewebSecondaryText
@@ -193,7 +193,7 @@ VisPrimaryDark							= #021E4C								// VisaBrandPrimaryDark
 	// VisSecondaryLight						= #FFD700								// VisaBrandSecondaryLight
 	// VisSecondaryDark							= #F7B600								// VisaBrandSecondaryDark
 	// VisTertiary7								= #2C2C2C								// VisaBrandTertiary7
-VisTertiary6							= #5C5C5C								// VisaBrandTertiary6
+	// VisTertiary6								= #5C5C5C								// VisaBrandTertiary6
 	// VisTertiary5								= #979797								// VisaBrandTertiary5
 	// VisTertiary4								= #B9B9B9								// VisaBrandTertiary4
 	// VisTertiary3								= #DEDEDE								// VisaBrandTertiary3
@@ -206,18 +206,18 @@ VisTertiary6							= #5C5C5C								// VisaBrandTertiary6
 /// ─── Arbe Robotics ───
 ARoPrimary								= #0035FF								// ArbePrimary
 	// ARoPrimaryLight							= #0640FF								// ArbePrimaryLight
-ARoSecondary		   					= #04ebff								// ArbeSecondary
+	// ARoSecondary			   					= #04ebff								// ArbeSecondary
 
 /// ─── AutoX ───
 	// AxPrimary								= #2253F0								// AutoXPrimary
 	// AxPrimaryLight							= #0050F9								// AutoXPrimaryLight
-AxSecondary								= #75ebc0								// AutoXSecondary
+	// AxSecondary								= #75ebc0								// AutoXSecondary
 
 /// ─── EEG ───
-EEGSkyBlue30							= #01EBF9								// EEGSkyBlue30
+	// EEGSkyBlue30								= #01EBF9								// EEGSkyBlue30
 EEGSkyBlue40							= #00E7FD								// EEGSkyBlue40
 EEGFucsia40								= #FF00B1								// EEGFucsia40
-EEGFucsia50								= #FE0CB6								// EEGFucsia50
+	// EEGFucsia50								= #FE0CB6								// EEGFucsia50
 
 /// ─── Bright Line ───
 	// BrLiYel10								= #FBFD73								// BrightLineBackground Yellow Light
@@ -228,10 +228,10 @@ BrLiYel20								= #FFFD52								// BrightLine Yellow Light
 
 /// ─── TradingView ───
 	// TVLightMenta50							= #00ffd5								// TradingViewMenta
-TVLightGreen50					    	= #33ffac								// TradingViewGreenNit
+	// TVLightGreen50					    	= #33ffac								// TradingViewGreenNit
 	// TVBlue50									= #0034c5								// TradingViewBlue
 	// TVLightYellow50							= #eedd45								// TradingViewYellow
-TVNitRed40						   		= #e91e63								// TradingViewRedLight
+	// TVNitRed40						   		= #e91e63								// TradingViewRedLight
 	// TVLightBlueSky50							= #12cef8								// TradingViewBlueSky
 
 /// ─── TFlab ───
@@ -266,18 +266,18 @@ UltrBlue								= #003bde								// UltrBlue
 
 /// ─── Allen ───
 AllenSky10								= #CCF8FF								// AllenSky10
-AllenSky20								= #80F3EC								// AllenSky20
+	// AllenSky20								= #80F3EC								// AllenSky20
 AllenSky50								= #01ebf9								// AllenSky50
 
-AllenMint10								= #E0F9EF								// AllenMint10
-AllenMint20								= #9CFFD7								// AllenMint20
-AllenMint30								= #7FFFD4								// AllenMint30
-AllenMint40								= #73FFCA								// AllenMint40
-AllenMint50								= #4fffc0								// AllenMint50
+	// AllenMint10								= #E0F9EF								// AllenMint10
+	// AllenMint20								= #9CFFD7								// AllenMint20
+	// AllenMint30								= #7FFFD4								// AllenMint30
+	// AllenMint40								= #73FFCA								// AllenMint40
+	// AllenMint50								= #4fffc0								// AllenMint50
 AllenMint60								= #33ffac								// AllenMint60
 
-AllenWine0								= #FFCCEF								// AllenWine10
-AllenWine20								= #FF6FD3								// AllenWine20
+	// AllenWine0								= #FFCCEF								// AllenWine10
+	// AllenWine20								= #FF6FD3								// AllenWine20
 AllenWine50								= #e91e63								// AllenWine50
 
 //// ───────────────────────
@@ -290,8 +290,8 @@ colNeurBack		= ARoPrimary
 
 //// ───────────────────────
 /// ─── Options colors
-ClassicUp		= TVLightGreen50
-ClassicDn		= TVNitRed40
+ClassicUp		= AllenMint60
+ClassicDn		= AllenWine50
 UltrUp			= AllenSky50
 UltrDn			= AmeTrGrayNickel
 AllenUp			= AllenMint60
