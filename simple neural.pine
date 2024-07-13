@@ -1,6 +1,6 @@
 // ╔════════════════════════════════════╗
-// ║  @Ultr								║
 // ║  Simple Neural						║
+// ║  @	Ultr							║
 // ║  © QuantraSystems					║
 // ╚════════════════════════════════════╝
 
@@ -46,7 +46,7 @@ AmeTrGrayNickel								= #F1F1F1								// AmeritradeGrayNickel
 	//  AmeTrGrayAsh							= #D8D8D8								// AmeritradeGrayAsh
 	//  AmeTrGrayStone							= #999999								// AmeritradeGrayStone
 	//  AmeTrGrayIron							= #666666								// AmeritradeGrayIron
-	//  AmeTrGrayCharcoal						= #333333								// AmeritradeGrayCharcoal
+AmeTrGrayCharcoal							= #333333								// AmeritradeGrayCharcoal
 	//  AmeTrBlack								= #000000								// AmeritradeBlack
 	//  AmeTrGreenCabbage						= #EBF6E9								// AmeritradeGreenCabbage
 	//  AmeTrGreenVerdeLight70					= #B4D6B2								// AmeritradeGreenVerdeLight70
@@ -183,12 +183,12 @@ GraySwebSeasalt			    				= #fafafc								// GrayScalewebSeasalt
 /// ─── Visa ───
 	// 	VisPrimary								= #1434CB								// VisaBrandPrimary
 	// 	VisPrimaryLight							= #3B57DE								// VisaBrandPrimaryLight
-	// 	VisPrimaryDark							= #021E4C								// VisaBrandPrimaryDark
+VisPrimaryDark								= #021E4C								// VisaBrandPrimaryDark
 	// 	VisSecondary							= #FCC015								// VisaBrandSecondary
 	// 	VisSecondaryLight						= #FFD700								// VisaBrandSecondaryLight
 	// 	VisSecondaryDark						= #F7B600								// VisaBrandSecondaryDark
 	// 	VisTertiary7							= #2C2C2C								// VisaBrandTertiary7
-	// 	VisTertiary6							= #5C5C5C								// VisaBrandTertiary6
+VisTertiary6								= #5C5C5C								// VisaBrandTertiary6
 	// 	VisTertiary5							= #979797								// VisaBrandTertiary5
 	// 	VisTertiary4							= #B9B9B9								// VisaBrandTertiary4
 	// 	VisTertiary3							= #DEDEDE								// VisaBrandTertiary3
@@ -209,10 +209,10 @@ ARoSecondary			    				= #04ebff								// ArbeSecondary
 AxSecondary									= #75ebc0								// AutoXSecondary
 
 /// ─── EEG ───
-	// EEGSkyBlue30								= #01EBF9								// EEGSkyBlue30
-	// EEGSkyBlue40								= #00E7FD								// EEGSkyBlue40
-	// EEGFucsia40								= #FF00B1								// EEGFucsia40
-	// EEGFucsia50								= #FE0CB6								// EEGFucsia50
+EEGSkyBlue30								= #01EBF9								// EEGSkyBlue30
+EEGSkyBlue40								= #00E7FD								// EEGSkyBlue40
+EEGFucsia40									= #FF00B1								// EEGFucsia40
+EEGFucsia50									= #FE0CB6								// EEGFucsia50
 
 /// ─── Bright Line ───
 	// 	BrLiYel10								= #FBFD73								// BrightLineBackground Yellow Light
@@ -253,14 +253,16 @@ TFlSydney		    						= #F0B884								// Lite TFlabSydney
 	// UltrLyla									= #7E57C2								// UltrLyla
 	// UltrLightGray							= #787B86								// UltrLightGray
 	// UltrRedNit								= #de0011								// UltrRedNit
-	// UltrRed									= #db004b								// UltrRed
-	// UltrBlue									= #003bde								// UltrBlue
+UltrRed										= #db004b								// UltrRed
+UltrBlue									= #003bde								// UltrBlue
 	// UltrYellow								= #f4de1a								// UltrYellow
 	// UltrSkyBlue								= #12cef8								// UltrSkyBlue
 	// UltrOrange								= #ff5a00								// UltrOrange
 
 /// ─── Allen ───
+AllenSky10									= #CCF8FF								// AllenSky10
 AllenSky20									= #80F3EC								// AllenSky20
+AllenSky50									= #01ebf9								// AllenSky50
 
 AllenMint10									= #E0F9EF								// AllenMint10
 AllenMint20									= #9CFFD7								// AllenMint20
@@ -269,12 +271,30 @@ AllenMint40									= #73FFCA								// AllenMint40
 AllenMint50									= #4fffc0								// AllenMint50
 AllenMint60									= #33ffac								// AllenMint60
 
+AllenWine50									= #e91e63								// AllenWine50
+
 /////////////////
 
 /// ── Manual colors
 colNeurUp		= AllenMint60
 colNeurDn		= AmeTrGrayNickel
 colNeurBack		= ARoPrimary
+
+/// ── Options colors
+ClassicUp		= TVLightGreen50
+ClassicDn		= TVNitRed40
+UltrUp			= AllenSky50
+UltrDn			= AmeTrGrayNickel
+AllenUp			= AllenMint60
+AllenDn			= AllenSky10
+ModernUp		= EEGSkyBlue40
+ModernDn		= EEGFucsia40
+RobustUp		= BrLiYel20
+RobustDn		= TFlAsia
+AccentedUp		= UltrBlue
+AccentedDn		= UltrRed
+MonochromeUp	= AmeTrGrayNickel
+MonochromeDn	= VisPrimaryDark
 
 /// ── Vars ──
 var string NS = "ɴɴᴛ ʀsɪ - Settings", var string NU = "ɴɴᴛ ʀsɪ - UI", var string COMP = "Compressed Signal Mode"
@@ -290,7 +310,7 @@ DispV			= input.string("Hybrid",			"Display Variant",								group = NU,		option
 ColType			= input.string("Trend Following",	"Choose Mode",									group = NU,		options = ["None", "Trend Following", "Candles", "Extremes", "Reversals"], tooltip = "Signal Mode - Barcolor")
 BCol			= input.bool  (true,				"Bar Coloring",									group = NU)
 ColMode			= input.string("Allen",				"Color Palette Choice",		inline = "drop",	group = NU,		options = ["Classic", "Allen", "Ultr", "Modern", "Robust", "Accented", "Monochrome"])
-man				= input.bool  (true,				"Custom Palette",			inline = "drop",	group = NU)
+man				= input.bool  (false,				"Custom Palette",			inline = "drop",	group = NU)
 manUpC			= input.color (colNeurUp,			"Custom Up",				inline = "man",		group = NU) 
 manDnC			= input.color (colNeurDn,			"Custom Down",				inline = "man",		group = NU)
 Rev				= input.bool  (true,				"Show Reversion Signals - HA only",				group = NU)
@@ -305,13 +325,13 @@ Candles_B		= input.bool  (true,				"HA Candle Line",								group = COMP)
 /// ── Option Color 
 
 [UpC, DnC]			= switch	 ColMode
-	"Classic"		=> [#00E676, #880E4F]
-	"Ultr"			=> [#01ebf9, #f1f1f1]
-	"Allen"			=> [#33ffac, #f1f1f1]
-	"Modern"		=> [#5ffae0, #c22ed0]
-	"Robust"		=> [#ffbb00, #770737]
-	"Accented"		=> [#9618f7, #ff0078]
-	"Monochrome"	=> [#dee2e6, #495057]
+	"Classic"		=> [ClassicUp,		ClassicDn]
+	"Ultr"			=> [UltrUp,			UltrDn]
+	"Allen"			=> [AllenUp,		AllenDn]
+	"Modern"		=> [ModernUp,		ModernDn]
+	"Robust"		=> [RobustUp,		RobustDn]
+	"Accented"		=> [AccentedUp,		AccentedDn]
+	"Monochrome"	=> [MonochromeUp,	MonochromeDn]
 
 [UpCol, DnCol]		=  switch	man
 	false			=> [UpC,	DnC   ]
@@ -414,7 +434,7 @@ pu2 = plot      (u2,      "2.𝓢𝓓 +",             color.new(DnCol, 70),     
 pl2 = plot      (l2,      "2.𝓢𝓓 -",             color.new(UpCol, 70),                                                             display = price_scale)
 
 pOut= plot      (DispV != "Heikin Ashi"? nnOutput : na, "ɴɴᴛ ʀsɪ", nnOutput > cross? UpCol : DnCol, DispV == "Hybrid"? 1 : 2,     display =         all)
-mid = plot      (cross,   "𝓒𝓻𝓸𝓼𝓼𝓲𝓷𝓰 𝓛𝓲𝓷𝓮",   color.gray,                                                                      display =         all),
+mid = plot      (cross,   "Crossing Line",   color.gray,                                                                      display =         all),
 	  fill      (mid, pOut, nnOutput, cross,    color.new(nnOutput > cross ? UpCol : DnCol, 50), color.new(chart.bg_color, 75),   display =         all), 
 	  fill      (pu1, pu2, u2, u1,              color.new(DnCol, 60), color.new(chart.bg_color, 75),                              display =         all),
 	  fill      (pl1, pl2, l2, l1,              color.new(UpCol, 60), color.new(chart.bg_color, 75),                              display =         all),

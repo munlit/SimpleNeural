@@ -1,0 +1,249 @@
+Created_by =  "
+                 🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪
+                 🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪
+                 🟪🟪                                                                                                                                                      🟪🟪
+                 🟪🟪     ██████   ██    ██   █████   ███    ██  ████████  ██████    █████          ███████  ██    ██  ███████  ████████  ███████  ███    ███  ███████     🟪🟪
+                 🟪🟪    ██    ██  ██    ██  ██   ██  ████   ██     ██     ██   ██  ██   ██         ██        ██  ██   ██          ██     ██       ████  ████  ██          🟪🟪
+                 🟪🟪    ██    ██  ██    ██  ███████  ██ ██  ██     ██     ██████   ███████         ███████    ████    ███████     ██     █████    ██ ████ ██  ███████     🟪🟪
+                 🟪🟪    ██ ▄▄ ██  ██    ██  ██   ██  ██  ██ ██     ██     ██   ██  ██   ██              ██     ██          ██     ██     ██       ██  ██  ██       ██     🟪🟪
+                 🟪🟪     ██████    ██████   ██   ██  ██   ████     ██     ██   ██  ██   ██         ███████     ██     ███████     ██     ███████  ██      ██  ███████     🟪🟪
+                 🟪🟪        ▀▀                                                                                                                                            🟪🟪
+                 🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪
+                 🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪
+              
+              "                                                                                         
+
+
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © QuantraSystems
+// @version=5
+// @description Custom Dynamic functions that allow an adaptive calculation beginning from the first bar
+library("DynamicFunctions", false)
+
+import QuantraAI/QuantraMAs/2 as DynamicMA
+
+calcActualPeriod(src, period) =>
+    nonNaCount = 0
+    for i = 0 to bar_index
+        if not na(src[i])
+            nonNaCount += 1
+        if nonNaCount == period
+            break
+    nonNaCount
+
+// @function Dynamic RoC
+// @param src and period
+// Custom function to calculate the actual period considering non-na source values
+export RoC(float src, int period) =>
+    actualPeriod = calcActualPeriod(src, period)
+    float prevValue = na
+    // Find the source value that is 'actualPeriod' non-na bars ago
+    nonNaCounter = 0
+    for i = 0 to bar_index
+        if not na(src[i])
+            nonNaCounter += 1
+        if nonNaCounter == actualPeriod
+            prevValue := src[i]
+            break
+    roc = actualPeriod > 0 and not na(prevValue) ? (src - prevValue) / prevValue * 100 : na
+    roc
+
+// @function Dynamic Median
+// @param src and length
+export dynamicMedian(float src, int length) =>
+    if bar_index > length
+        ta.median(src, length)
+    else 
+        // Initialize an array of values
+        var float[] values = array.new_float()
+        
+        // Fill the array with the last 'length' values, ignoring 'na' values
+        for i = 0 to length - 1
+            value = src[i]
+            if not na(value)
+                array.push(values, value)
+        
+        // Only proceed if we have enough data
+        if array.size(values) > 0
+            // Sort the array
+            array.sort(values)
+            
+            // Calculate the median
+            size = array.size(values)
+            float medianValue = na
+            if size % 2 != 0
+                // Odd number of elements
+                medianIndex = (size - 1) / 2
+                medianValue := array.get(values, medianIndex)
+            else
+                // Even number of elements
+                medianIndex1 = size / 2 - 1
+                medianIndex2 = size / 2
+                medianValue := (array.get(values, medianIndex1) + array.get(values, medianIndex2)) / 2
+            medianValue
+        else
+            na
+
+
+
+kernel(source, kernel_type) =>
+    switch kernel_type
+        "Epanechnikov" =>   math.abs(source) <= 1 ? 0.75 * (1 - math.pow(source, 2)) : 0.0
+        "Logistic"     => 1/math.exp(source + 2 + math.exp(-source))
+        "Wave"         =>   math.abs(source) <= 0.5 ? (1 - math.abs(source)) * math.cos(math.pi * source) : 0.
+
+
+// @function Dynamic Kernel Regression Calculation \n Uses either of the following inputs for kernel_type:\nEpanechnikov\nLogistic\nWave
+// @param src, bandwidth, kernel_type
+export kernelRegression(float src, int bandwidth, string kernel_type) =>
+    actualBandwidth = math.min(bandwidth, bar_index + 1)
+    sumWeightedY = 0.0
+    sumKernels = 0.0
+    for i = 0 to actualBandwidth - 1
+        base = (i * i) / math.pow(actualBandwidth,2)
+        kernelValue = kernel(base, kernel_type)
+        if not na(src[i])
+            sumWeightedY += kernelValue * nz(src[i], 0) // Replace na with 0
+            sumKernels += kernelValue
+    sumKernels != 0 ? (src - sumWeightedY / sumKernels) / src : na
+
+
+// @function Dynamic Wave Calculation function
+// @function Use together with kernelRegression function to get chart applicable band
+// @param source, bandwidth, width
+export waveCalculation(float source, int bandwidth, float width) =>
+    actualBandwidth = math.min(bandwidth, bar_index)
+    sum  = 0.0
+    sumw = 0.0
+    for i = 0 to actualBandwidth
+        if not na(source[i])
+            val    = (i * i) / (math.pow(actualBandwidth, 2)) / width
+            weight = val <= 0.5 ? (1 - val) * math.cos(math.pi * val) : 0.0
+            sum  := sum  + source[i] * weight
+            sumw := sumw + weight
+    kernel_regression = sumw != 0 ? sum / sumw : na
+    kernel_regression
+
+
+
+// @function Dynamic RSI function
+// @param Source, Length
+export Rsi(float src, int length) =>
+    var float res = na
+    actualLength = math.min(length, bar_index)
+    u = math.max(src - src[1], 0) 
+    d = math.max(src[1] - src, 0) 
+    rs = DynamicMA.RMA(u, actualLength) / DynamicMA.RMA(d, actualLength)
+    res := 100 - 100 / (1 + rs)
+    res
+
+// @function Dynamic SD function
+// @param src, period
+export dynamicStdev(float src, int period) =>
+    actualPeriod = math.min(period, bar_index + 1) 
+    mean         = DynamicMA.SMA(src, actualPeriod)
+    sumSquares   = 0.0
+    count = 0
+    for i = 0 to actualPeriod - 1
+        if not na(src[i])
+            sumSquares := sumSquares + math.pow(nz(src[i]) - mean, 2)
+            count := count + 1
+    if count > 0
+        math.sqrt(sumSquares / count)
+    else
+        sumSquares
+
+
+// @function Dynamic SD Bands
+// @param src, length, mult
+// @returns Basis, Positive SD, Negative SD
+export stdv_bands(float src, int length, float mult) =>
+    float basis = DynamicMA.SMA(src, length)
+    float dev   = mult * dynamicStdev(src, length)
+    [basis, basis + dev, basis - dev]
+
+
+// @function Dynamic ADX
+// @param diLen, adxLen
+// @returns adx
+export Adx(int dilen, int adxlen) =>
+    up   = math.max(ta.change(high), 0)
+    down = math.max(-ta.change(low), 0)
+    plusDM  =   up > down ? up   :   0
+    minusDM = down > up   ? down :   0
+    
+    truerange  = math.max(high - low, math.abs(high - close[1]), math.abs(low - close[1]))
+    truerange := DynamicMA.RMA(truerange, dilen)
+
+    plusDI     = 100 * DynamicMA.RMA(plusDM,  dilen) / truerange
+    minusDI    = 100 * DynamicMA.RMA(minusDM, dilen) / truerange
+    
+    sumDI = plusDI + minusDI
+    adx   = 100 * DynamicMA.RMA(math.abs(plusDI - minusDI) / nz(sumDI, 1), adxlen)
+    adx
+
+
+// @function Dynamic ATR
+// @param length
+// @returns ATR
+export Atr(int length) =>
+    len = math.min(length, bar_index)
+    trueRange = na(high[1])? high-low : math.max(math.max(high - low, math.abs(high - close[1])), math.abs(low - close[1]))
+    DynamicMA.RMA(trueRange, len)
+
+
+// @function Dynamic MACD
+// @param source, fastLength, slowLength, signalsmoothing
+// @returns macdLine, signalLine, histogram
+export Macd(float source, int fastLength, int slowLength, int signalSmoothing) =>
+    fastEMA = DynamicMA.EMA(source, fastLength)
+    slowEMA = DynamicMA.EMA(source, slowLength)
+    macdLine = fastEMA - slowEMA
+    signalLine = DynamicMA.EMA(macdLine, signalSmoothing)
+    histogram = macdLine - signalLine
+    [macdLine, signalLine, histogram]
+
+
+// Display Example
+upper  = hline(30)
+middle = hline(50)
+lower  = hline(70)
+RSI2   = Rsi(close, 22)
+SMA2   = DynamicMA.SMA(RSI2, 22)
+
+plot(RSI2, "Dynamic RSI",    color.fuchsia  )
+plot(SMA2, "Dynamic SMA",    color.yellow   )
+fill(upper, lower, color.new(color.gray, 85))
+
+//
+//                              ,/((((((((((((((((((,                             
+//                        *(((/.              *      ./(((/                       
+//                    (((*         .((((((((          ,    ,(((                   
+//             /* .((/      ,((*              /*.          ,,  *((,               
+//           (. ((/  /  ,(*           .,*****,.     /(            *((             
+//         (  ((.    *(.       *((*               ,(((            .  ((           
+//       (* ((.    (*      /(,  ,((.              ((/  .((  *(      /  ((         
+//      ( ,(/    (*     *(.  //                       *(   ((  (*     * ,(/       
+//    .( ((    *(     ((                  (                  /(        /  ((      
+//   .( ((    (,    .(  (*                (                .(. ((          ((     
+//   ( /(.   (,    (/ *(          &@@@@@@ (       &@%        *( ,(          ((    
+//  /. (/   //    (/          *@@.@@@@ @@,(      ,#              ,( *(      *(*   
+//  ( ((    (    .( ,*        @@@.*,@@@@@*(    .%   ,@@%@@/    (( (* (,      ((                  ██████╗  ██╗   ██╗  █████╗  ███╗   ██╗ ████████╗ ██████╗   █████╗ 
+//  ( (( , ,(    (* (.      ,@@@&@@@@@@@@*(        &            (  ( ,(      /(                 ██╔═══██╗ ██║   ██║ ██╔══██╗ ████╗  ██║ ╚══██╔══╝ ██╔══██╗ ██╔══██╗
+// ,* (/ * ((    (  (      @@@(*@@@@(/@@% (             .*      (  (         *(.                ██║   ██║ ██║   ██║ ███████║ ██╔██╗ ██║    ██║    ██████╔╝ ███████║
+// ,/ ((   ((    (        .@@@@##%@@@@@@@*(             %&         (       / *( .(              ██║▄▄ ██║ ██║   ██║ ██╔══██║ ██║╚██╗██║    ██║    ██╔══██╗ ██╔══██║
+//  ( ((    (    *(        @@@@@@@@@@ @@@*( ......(,              *(       * (( /,              ╚██████╔╝ ╚██████╔╝ ██║  ██║ ██║ ╚████║    ██║    ██║  ██║ ██║  ██║
+//  ( ,(,   (.    (  (     .@@%,@% %@@@@@*(,@@@@    %...@@,       (       ,  (/ (                ╚══▀▀═╝   ╚═════╝  ╚═╝  ╚═╝ ╚═╝  ╚═══╝    ╚═╝    ╚═╝  ╚═╝ ╚═╝  ╚═╝
+//  ./ ((    (     (  (.    *@@@ @@@@/(@@*(      @               (.         (( */ 
+//   /, ((    (     (,         ,*@@@@@@@@ (       @@@           (          /(. (  
+//    (, ((    (.    ,(            (@@(   (                   (/ .        /(, (   
+//     (* ((  , *(     *(                 (                 (( .(        (( .(    
+//      .( /(/ .  ((  (/  ((              ,                  /(        ,(( /*     
+//        /* ((* .  *(  .(/  *((.                                    .(( .(       
+//          (, (((     ((          /((((((            /.    ((  (  *((  (         
+//            // .((*  ,  .((.   ./(((/*.      /((/.    ((,      ((/ *(           
+//               (* .(((        /(((*.         .,(((/.   /   *((/ .(.             
+//                  ((  *(((*     (              . ,    ,(((/  /(.                
+//                      /(,  .((((((*,         .*((((((,  .((.                    
+//                           ,(((,                 ,/((,   
+//
